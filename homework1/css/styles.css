@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html {
+    background-color: #343434;
+    color: #16b1b5;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    scroll-behavior: smooth;
+    font-size: 24px;
+}
+
+header {
+    padding: 40px;
+}
+
+h1 {
+    line-height: .8;
+}
+
+p {
+    margin: 1em 0;
+}
+
+nav {
+    font-size: 16px;
+    text-align: center;
+    /* padding: 1em 0; */
+}
+
+a {
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid white;
+}
+
+#work {
+    background-color: #16b1b5;
+    padding: 40px;
+    column-count: 2;
+    color: white;
+}
+
+#hobbies {
+    padding: 40px;
+}
+
+#gallery {
+    column-count: 3;
+    column-gap: 0;
+    background-color: #16b1b5;
+}
+
+div {
+    break-inside: avoid;
+}
+
+img {
+    width: 100%;
+    display: block;
+    height: calc(100vw / 3);
+    object-fit: cover;
+    object-position: top;
+}
+
+footer {
+    text-align: center;
+}
