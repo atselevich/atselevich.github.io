@@ -1,0 +1,177 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #121212;
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+    background-color: #f0efef;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    grid-template-rows: 10vh auto minmax(20vh, 30vh);
+    grid-template-areas: "header header" "main aside" "footer footer";
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+}
+
+header {
+    grid-area: header;
+    background-color: #033048;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3em;
+}
+
+.header-logo {
+    width: 150px;
+}
+
+nav {
+    width: 90vw;
+}
+
+nav a {
+    font-weight: 600;
+    font-size: 1em;
+    color: yellow;
+    padding: .5em;
+    float: right;
+}
+
+main {
+    grid-area: main;
+    background-color: #efefef;
+    padding: 3em;
+}
+
+main h2 {
+    font-weight: 600;
+    font-size: 2em;
+    padding-bottom: .5em;
+}
+
+main p {
+    font-weight: 300;
+    font-size: 1.1em;
+    padding-bottom: 1em;
+}
+
+main .read-more {
+    font-weight: 600;
+    font-size: 1.1em;
+    float: right;
+    display: block;
+    width: 100%;
+    padding-bottom: 1em;
+    text-align: right;
+}
+
+main .read-more:after{
+    content: " >";
+}
+
+article img {
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+hr{
+  border-color: #033048;
+}
+aside {
+    background-color: #efefef;
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    align-content: flex-start;
+    padding: 3em 3em 3em 0;
+}
+
+aside div {
+    padding-bottom: 1em;
+}
+
+aside h3 {
+    font-weight: 900;
+    font-size: 1em;
+    padding-bottom: 1em;
+}
+
+aside h3 a {
+    font-weight: 600;
+    font-size: 1.25em;
+}
+
+aside ul {
+    list-style-type: none;
+}
+
+aside ul, p {
+    font-weight: 300;
+    font-size: 1em;
+}
+
+aside .aside-ads {
+    background-color: white;
+    width: 100%;
+    height: 70px;
+}
+
+footer {
+    background-color: #033048;
+    grid-area: footer;
+}
+
+footer .signup {
+    background-color: #f9e42e;
+    padding: 3em;
+    text-align: center;
+}
+
+.blue-button {
+    background-color: #033048;
+    color: #f9e42e;
+    padding: 1em;
+    font-weight: 600;
+    border-radius: .5em;
+}
+
+.footer-logo{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.footer-logo img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 35px;
+    text-align: center;
+}
+
+footer p{
+    color: white;
+    text-align: center;
+}
+
+.social-media{
+    text-align: center;
+}
+
+.social-media img{
+    display: inline-block;
+margin-left: auto;
+margin-right: auto;
+    height: 30px;
+}
