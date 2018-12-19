@@ -2,6 +2,7 @@
     box-sizing: border-box;
     font-size: 20px;
     scroll-behavior: smooth;
+    font-family: 'Lato', sans-serif;
 }
 
 * {
@@ -74,7 +75,26 @@ nav {
 }
 
 .condition-info{
-    float:right;
+    padding: 5px 15px 0px 15px;   
+    float:right;  
+    z-index: 99999;   
+}
+
+.condition-info ul{    
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        list-style-image: none;      
+             
+}
+
+.condition-info li{    
+    margin: 0;
+    padding: 5px;      
+}
+
+.condition-info h2{
+    padding: 5px
 }
 
 a {
