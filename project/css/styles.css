@@ -10,9 +10,15 @@
     box-sizing: inherit;
 }
 
-nav {
+header{
     position: absolute;
     z-index: 9999;
+    display: flex;   
+    justify-content: space-between; 
+    width: 100%;
+}
+nav {    
+    align-self: flex-start;
 }
 
 .hamburger {
@@ -75,9 +81,8 @@ nav {
 }
 
 .condition-info{
-    padding: 5px 15px 0px 15px;   
-    float:right;  
-    z-index: 99999;   
+    padding: 5px 15px 0px 15px;        
+    align-self: flex-end    
 }
 
 .condition-info ul{    
@@ -96,6 +101,7 @@ nav {
 .condition-info h2{
     padding: 5px
 }
+
 
 a {
     text-decoration: none;

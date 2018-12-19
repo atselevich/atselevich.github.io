@@ -14,30 +14,18 @@ $(document).ready(function () {
 
 
 
-    $('#wave4').drawWaves({
+    $('#wave2').drawWaves({
         height: baseHeight,
         waveDelta: waveDelta,
         speed: .15,
         color: '#1F538F'
     });
-    $('#wave3').drawWaves({
+    $('#wave1').drawWaves({
         height: baseHeight - 5,
         waveDelta: waveDelta,
         speed: .25,
         color: '#407DB3'
-    });
-    $('#wave2').drawWaves({
-        height: baseHeight - 10,
-        waveDelta: waveDelta,
-        speed: .45,
-        color: '#b4cee4'
-    })
-    $('#wave1').drawWaves({
-        height: baseHeight - 15,
-        waveDelta: waveDelta,
-        speed: .65,
-        color: '#6DA2CC'
-    })
+    });   
 
     $(".cross").hide();
     $(".menu").hide();
@@ -58,29 +46,43 @@ $(document).ready(function () {
     $(".spot").click(function () {
 
         let selected = getSelected();
-        if(selected.length)
-        {
+        if (selected.length) {
             selected.removeAttr("selected")
         }
 
         let spotId = $(this).data("mswid");
         $(this).attr("selected", true)
 
-        $.ajax("http://magicseaweed.com/api/e035ec3907acbee73a5eea8ba2f3e2fc/forecast/?spot_id=" + spotId, {
-            success: function (data) {
-                console.log(data);
-                redrawWaves(data, 0)
-            }
-        })
+        getData(spotId, 0);
 
         $(".menu").slideToggle("slow", function () {
             $(".cross").hide();
             $(".hamburger").show();
         });
     })
+
+    $("#range-timeslot").change(function () {
+        var selected = getSelected();
+
+        getData(selected.data("mswid"), $(this).val())
+    })
 });
 
-function getSelected(){
+function getData(spotId, index) {
+    $.ajax("http://magicseaweed.com/api/e035ec3907acbee73a5eea8ba2f3e2fc/forecast/?spot_id=" + spotId, {
+        success: function (data) {
+            console.log(data);
+            redrawWaves(data, index);
+        }
+    });
+}
+
+function getDateTime(unixTimestamp) {
+    var date = new Date(unixTimestamp * 1000);
+    return date.toLocaleString();
+}
+
+function getSelected() {
     return $('.spot[selected="selected"]');
 }
 
@@ -88,42 +90,34 @@ function fillConditionInfo(timeBlock) {
     let name = getSelected().text();
 
     $("#spot-name").text(name);
+    $("#spot-time").text("Time: " + getDateTime(timeBlock.localTimestamp));
     $("#spot-combined-height").text("Combined Height: " + timeBlock.swell.components.combined.height + "ft");
-    $("#spot-primary-height").text("Primary Height: " + timeBlock.swell.components.primary.height + "ft");
-    $("#spot-secondary-height").text("Secondary Height: " + timeBlock.swell.components.secondary.height + "ft");
-    $("#spot-tertiary-height").text("Tertiary Height: " + timeBlock.swell.components.tertiary.height + "ft");
+    $("#spot-primary-height").text("Primary Height: " + timeBlock.swell.components.primary.height + "ft");   
+
+    //$("#range-container").show();
 }
 
 function redrawWaves(mswData, index) {
 
-    let heightMultiplier = 50;
+    let heightMultiplier = 30;
     let periodMultiplier = .1;
     let timeBlock = mswData[index];
 
     fillConditionInfo(timeBlock);
-
-    $('#wave4').drawWaves({
+     
+    $('#wave2').text(`<path id="wave2" d=""></path>`);
+    $('#wave2').drawWaves({
         height: baseHeight,
         waveDelta: timeBlock.swell.components.combined.height * heightMultiplier,
         speed: timeBlock.swell.components.combined.period * periodMultiplier,
         color: '#1F538F'
     });
-    $('#wave3').drawWaves({
+
+    $('#wave1').text(`<path id="wave1" d=""></path>`);
+    $('#wave1').drawWaves({
         height: baseHeight - 5,
         waveDelta: timeBlock.swell.components.primary.height * heightMultiplier,
         speed: timeBlock.swell.components.primary.period * periodMultiplier,
         color: '#407DB3'
     });
-    $('#wave2').drawWaves({
-        height: baseHeight - 10,
-        waveDelta: timeBlock.swell.components.secondary.height * heightMultiplier,
-        speed: timeBlock.swell.components.secondary.period * periodMultiplier,
-        color: '#b4cee4'
-    })
-    $('#wave1').drawWaves({
-        height: baseHeight - 15,
-        waveDelta: timeBlock.swell.components.tertiary.height * heightMultiplier,
-        speed: timeBlock.swell.components.tertiary.period * periodMultiplier,
-        color: '#6DA2CC'
-    })
 }
