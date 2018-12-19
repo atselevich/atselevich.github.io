@@ -1,5 +1,7 @@
-let baseHeight = 200;
-let waveDelta = 10;
+const baseHeight = 200;
+const waveDelta = 10;
+const dataIndexKey = "dataIndex";
+const spotIdKey = "spotId"
 
 $(document).ready(function () {
     //http://magicseaweed.com/developer/forecast-api    
@@ -13,19 +15,36 @@ $(document).ready(function () {
     //timestamps are in unix encoding, convert at https://www.unixtimestamp.com/index.php    
 
 
+    let spotId = getParameterByName(spotIdKey);
+    let dataIndex = getParameterByName(dataIndexKey);
+    if (spotId) {
+        if(!dataIndex)
+        {
+            dataIndex = 0;
+        }
+        else{
+            $("#range-timeslot").val(dataIndex);
+        }
+        
+        let spot = getSpotById(spotId);
+        spot.attr("selected", true)
 
-    $('#wave2').drawWaves({
-        height: baseHeight,
-        waveDelta: waveDelta,
-        speed: .15,
-        color: '#1F538F'
-    });
-    $('#wave1').drawWaves({
-        height: baseHeight - 5,
-        waveDelta: waveDelta,
-        speed: .25,
-        color: '#407DB3'
-    });   
+        getData(spotId, dataIndex);
+     }
+    else {
+        $('#wave2').drawWaves({
+            height: baseHeight,
+            waveDelta: waveDelta,
+            speed: .15,
+            color: '#1F538F'
+        });
+        $('#wave1').drawWaves({
+            height: baseHeight - 5,
+            waveDelta: waveDelta,
+            speed: .25,
+            color: '#407DB3'
+        });
+    }
 
     $(".cross").hide();
     $(".menu").hide();
@@ -43,17 +62,10 @@ $(document).ready(function () {
         });
     });
 
-    $(".spot").click(function () {
-
-        let selected = getSelected();
-        if (selected.length) {
-            selected.removeAttr("selected")
-        }
-
+    $(".spot").click(function () {        
+        
         let spotId = $(this).data("mswid");
-        $(this).attr("selected", true)
-
-        getData(spotId, 0);
+        window.location.href = window.location.href.split('?')[0] + "?" + spotIdKey +"="+ spotId;        
 
         $(".menu").slideToggle("slow", function () {
             $(".cross").hide();
@@ -64,9 +76,20 @@ $(document).ready(function () {
     $("#range-timeslot").change(function () {
         var selected = getSelected();
 
-        getData(selected.data("mswid"), $(this).val())
+        window.location.href = window.location.href.split('?')[0] + "?" + spotIdKey +"="+ spotId + "&" + dataIndexKey + "=" + $(this).val();        
+        
     })
 });
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 function getData(spotId, index) {
     $.ajax("http://magicseaweed.com/api/e035ec3907acbee73a5eea8ba2f3e2fc/forecast/?spot_id=" + spotId, {
@@ -82,6 +105,10 @@ function getDateTime(unixTimestamp) {
     return date.toLocaleString();
 }
 
+function getSpotById(spotId) {
+    return $('.spot[data-mswid="'+ spotId +'"]');
+}
+
 function getSelected() {
     return $('.spot[selected="selected"]');
 }
@@ -92,32 +119,30 @@ function fillConditionInfo(timeBlock) {
     $("#spot-name").text(name);
     $("#spot-time").text("Time: " + getDateTime(timeBlock.localTimestamp));
     $("#spot-combined-height").text("Combined Height: " + timeBlock.swell.components.combined.height + "ft");
-    $("#spot-primary-height").text("Primary Height: " + timeBlock.swell.components.primary.height + "ft");   
+    $("#spot-primary-height").text("Primary Height: " + timeBlock.swell.components.primary.height + "ft");
 
-    //$("#range-container").show();
+    $("#range-container").show();
 }
 
 function redrawWaves(mswData, index) {
 
-    let heightMultiplier = 30;
+    let heightMultiplier = 10;
     let periodMultiplier = .1;
     let timeBlock = mswData[index];
 
     fillConditionInfo(timeBlock);
-     
-    $('#wave2').text(`<path id="wave2" d=""></path>`);
+    
     $('#wave2').drawWaves({
         height: baseHeight,
         waveDelta: timeBlock.swell.components.combined.height * heightMultiplier,
-        speed: timeBlock.swell.components.combined.period * periodMultiplier,
+        speed: .15,
         color: '#1F538F'
     });
-
-    $('#wave1').text(`<path id="wave1" d=""></path>`);
+    
     $('#wave1').drawWaves({
         height: baseHeight - 5,
         waveDelta: timeBlock.swell.components.primary.height * heightMultiplier,
-        speed: timeBlock.swell.components.primary.period * periodMultiplier,
+        speed: .25,
         color: '#407DB3'
     });
 }
