@@ -1,12 +1,5 @@
 :root {
     box-sizing: border-box;
-    /* --gradient: linear-gradient(rgba(207,0,99,.95), rgba(53,14,71,.95));
-    --primary: rgb(207,0,99);
-    --secondary: rgb(53,14,71);
-    --highlight: rgb(252,10,126);
-    --text-color: rgb(107,107,107);
-    font-family: 'Lato', sans-serif;
-    color: var(--text-color); */
     font-size: 20px;
     scroll-behavior: smooth;
 }
@@ -14,6 +7,74 @@
 * {
     margin: 0;
     box-sizing: inherit;
+}
+
+nav {
+    position: absolute;
+    z-index: 9999;
+}
+
+.hamburger {
+    background: none;
+        top: 0;
+    right: 0;
+    line-height: 45px;
+    padding: 5px 15px 0px 15px;    
+    border: 0;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.cross {
+    background: none;    
+    top: 0px;
+    right: 0;
+    padding: 7px 15px 0px 15px;
+     border: 0;
+    font-size: 3em;
+    line-height: 65px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.menu {    
+    font-weight: bold;
+    font-size: 0.8em;
+    width: 100%;        
+    text-align: center;
+    font-size: 12px;
+}
+
+.menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none;
+}
+
+.menu li {
+    display: block;
+    padding: 15px 0 15px 0;
+    border-bottom: #dddddd 1px solid;
+    text-decoration: none;
+    margin: 0px;
+    color: #666;
+    font-size: 1rem;
+}
+
+.menu li:hover {
+    display: block;    
+    padding: 15px 0 15px 0;
+    border-bottom: #dddddd 1px solid;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.condition-info{
+    float:right;
 }
 
 a {

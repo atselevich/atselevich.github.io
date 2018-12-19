@@ -8,7 +8,7 @@ $(document).ready(function () {
     //2nd Beach - 846
     //get height, speed based on magicseaweed data for spot. Add some randomness and variation based on min/max breaking height.
     //timestamps are in unix encoding, convert at https://www.unixtimestamp.com/index.php    
-    
+
     $('#wave1').drawWaves({
         //height: .5
         speed: .15,
@@ -21,5 +21,37 @@ $(document).ready(function () {
     $('#wave3').drawWaves({
         speed: .45,
         color: '#6DA2CC'
+    })
+
+    $(".cross").hide();
+    $(".menu").hide();
+    $(".hamburger").click(function () {
+        $(".menu").slideToggle("slow", function () {
+            $(".hamburger").hide();
+            $(".cross").show();
+        });
+    });
+
+    $(".cross").click(function () {
+        $(".menu").slideToggle("slow", function () {
+            $(".cross").hide();
+            $(".hamburger").show();
+        });
+    });
+
+    $(".spot").click(function(){
+        
+        let spotId = $(this).data("mswid");       
+
+        $.ajax("http://magicseaweed.com/api/e035ec3907acbee73a5eea8ba2f3e2fc/forecast/?spot_id=" + spotId,{
+            success: function(data){
+                alert(data);
+            }
+        } )
+        
+        $(".menu").slideToggle("slow", function () {
+            $(".cross").hide();
+            $(".hamburger").show();
+        });
     })
 });
